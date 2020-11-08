@@ -1,24 +1,23 @@
-# docker-nginx-php-mysql
-docker-compose exec db bash
-mysql -u root -p
+# Server for Laravel with Nginx + PHP + MySQL
 
-RANT ALL ON laravel.* TO 'laraveluser'@'%' IDENTIFIED BY 'your_laravel_db_password';
-FLUSH PRIVILEGES;
+This Docker includes all what you need to run a Laravel PHP application.
 
+## Configuration 🔧
 
+Define in  **.env** file your local PHP Laravel project
 
-Con su aplicación en ejecución, podrá migrar sus datos y experimentar con el comando tinker, que iniciará una consola PsySH con Laravel precargada. PsySH es una consola para desarrolladores de tiempo de ejecución y un depurador interactivo para PHP, y Tinker es un REPL específico para Laravel. Usar el comando tinker le permitirá interactuar con su aplicación de Laravel desde la línea de comandos en un shell interactivo.
+The Server is ready to work without any further configuration, although you can change some basic configuratins in the **.env** file.
 
-Primero, pruebe la conexión con MySQL ejecutando el comando Laravel artisan migrate, que crea una tabla migrations en la base de datos dentro del contenedor:
+## Start 🚀
 
-docker-compose exec app php artisan migrate
+Download the project and execute
 
-Migration table created successfully.
-Migrating: 2014_10_12_000000_create_users_table
-Migrated:  2014_10_12_000000_create_users_table
-Migrating: 2014_10_12_100000_create_password_resets_table
-Migrated:  2014_10_12_100000_create_password_resets_table
+```
+compose-docker up -d --build -V
+```
+After the installation you can get open your application on 
+(https://localhost:80)
 
-docker-compose exec app php artisan tinker
+## DB
 
-\DB::table('migrations')->get();
+A database and user for Laravel will be created. If you change the connection configuration you mas change the user/password in the database to allow the connection.
