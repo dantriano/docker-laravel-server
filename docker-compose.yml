@@ -1,11 +1,12 @@
-version: '3.8'
+version: '3'
 services:
   #PHP Service
   app:
     image: php:${PHP_V}-fpm
     container_name: app
     restart: unless-stopped
-    command: bash /scripts/init.sh
+    #command: bash /scripts/init.sh
+    entrypoint: bash /scripts/init.sh
     tty: true
     environment:
       SERVICE_NAME: app
@@ -15,10 +16,10 @@ services:
       - ${PROJECT_PATH}:/app
       - ./php/init.sh:/scripts/init.sh
       - ./php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
     expose:
       - ${PHP_PORT}
+    networks:
+      - app-network
 
   #Nginx Service
   webserver:
@@ -58,6 +59,18 @@ services:
     networks:
       - app-network
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - 8080:80
+    networks:
+      - app-network
+    depends_on:
+      - db
 
 #Docker Networks
 networks:
