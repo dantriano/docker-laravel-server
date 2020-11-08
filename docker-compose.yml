@@ -39,7 +39,7 @@ services:
   db:
     image: mysql:8
     container_name: db
-    #command: --init-file /etc/mysql/init.sql
+    command: --init-file /etc/mysql/init.sql
     restart: unless-stopped
     ports:
       - ${MYSQL_PORT}:3306
@@ -53,7 +53,7 @@ services:
     volumes:
       - dbdata:/var/lib/mysql/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
-      #- ./mysql/init.sql:/etc/mysql/init.sql
+      - ./mysql/init.sql:/etc/mysql/init.sql
       - /var/lib/mysql-files
     networks:
       - app-network
