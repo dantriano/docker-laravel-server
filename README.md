@@ -21,3 +21,8 @@ After the installation you can get open your application on
 ## DB
 
 A database and user for Laravel will be created. If you change the connection configuration you mas change the user/password in the database to allow the connection.
+
+## Tutorial
+Podeis ver el siguiente tutorial para ejecutar vuestra primer aplicación de Laravel con Docker
+
+[Tutoria como Instalar Docker para Laravel](https://youtu.be/nhnHyHRdpfk)
