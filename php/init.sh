@@ -12,9 +12,13 @@ apt-get update && apt-get install -y \
     zip \
     jpegoptim optipng pngquant gifsicle \
     vim \
+    nano \
     unzip \
     git \
     curl \
+    npm \
+    iputils-ping \
+    dnsutils \
     git
 
 # Clear cache
@@ -29,5 +33,10 @@ docker-php-ext-install gd
 
 # Install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+#Uncomment permission fix and resolvers in case to be unable to resolve Debian repositories:
+
+#chmod o+r /etc/resolv.conf
+#echo "nameserver 8.8.8.8" >> /etc/resolv.conf 
 
 php-fpm
