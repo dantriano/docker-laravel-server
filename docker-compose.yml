@@ -3,7 +3,7 @@ services:
   #PHP Service
   app:
     image: php:${PHP_V}-fpm
-    container_name: app
+    container_name: app_${DOCKER_NAME}
     restart: unless-stopped
     #command: bash /scripts/init.sh
     entrypoint: bash /scripts/init.sh
@@ -14,8 +14,8 @@ services:
     working_dir: /app
     volumes:
       - ${PROJECT_PATH}:/app
-      - ./php/init.sh:/scripts/init.sh
-      - ./php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ${DOCKER_PATH}/php/init.sh:/scripts/init.sh
+      - ${DOCKER_PATH}/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini
     expose:
       - ${PHP_PORT}
     networks:
@@ -24,7 +24,7 @@ services:
   #Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: webserver
+    container_name: webserver_${DOCKER_NAME}
     restart: unless-stopped
     tty: true
     ports:
@@ -32,14 +32,14 @@ services:
       #- 443:443
     volumes:
       - ${PROJECT_PATH}:/app
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ${DOCKER_PATH}/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
 
   #MySQL Service
   db:
     image: mysql:8
-    container_name: db
+    container_name: db_${DOCKER_NAME}
     command: --init-file /etc/mysql/init.sql
     restart: unless-stopped
     ports:
@@ -53,8 +53,8 @@ services:
       SERVICE_NAME: ${MYSQL_NAME}
     volumes:
       - dbdata:/var/lib/mysql/
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
-      - ./mysql/init.sql:/etc/mysql/init.sql
+      - ${DOCKER_PATH}/mysql/my.cnf:/etc/mysql/my.cnf
+      - ${DOCKER_PATH}/mysql/init.sql:/etc/mysql/init.sql
       - /var/lib/mysql-files
     networks:
       - app-network
@@ -62,7 +62,7 @@ services:
   #DBAdmin Acces from localhost:port
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin_${DOCKER_NAME}
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
